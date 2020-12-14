@@ -6,17 +6,17 @@ describe 'ユーザー認証のテスト' do
       visit new_user_registration_path
     end
     context '新規登録画面に遷移' do
-      it '新規登録に成功する' do
+      it '新規登録に成功する' do   #モデル[カラム名] withが入る値 / Internetからフェイクデータをもってくる
         fill_in 'user[name]', with: Faker::Internet.username(specifier: 5)
         fill_in 'user[email]', with: Faker::Internet.email
-        fill_in 'user[password]', with: 'password'
+        fill_in 'user[password]', with: 'password'  
         fill_in 'user[password_confirmation]', with: 'password'
         click_button 'Sign up'
 
-        expect(page).to have_content 'successfully'
+        expect(page).to have_content 'successfully' #遷移後表示されるメッセージ
       end
       it '新規登録に失敗する' do
-        fill_in 'user[name]', with: ''
+        fill_in 'user[name]', with: '' #値が空のときの判定
         fill_in 'user[email]', with: ''
         fill_in 'user[password]', with: ''
         fill_in 'user[password_confirmation]', with: ''
@@ -26,8 +26,9 @@ describe 'ユーザー認証のテスト' do
       end
     end
   end
+  
   describe 'ユーザーログイン' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user) } # @user = create(:user)と同じ RSpecではletを使う
     before do
       visit new_user_session_path
     end
