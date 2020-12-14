@@ -1,14 +1,17 @@
 require 'rails_helper'
 
 describe 'ヘッダーのテスト' do
-  describe 'ログインしていない場合' do
-    before do
+  describe 'ログインしていない場合' do                    # 対象指定の説明
+    # テストを行う事前準備として、root_pathに進む（visit パス名 == 指定したパスに進む）
+    before do                                             # テスト前に必要な項目の設定
       visit root_path
     end
-    context 'ヘッダーの表示を確認' do
-      subject { page }
-      it 'タイトルが表示される' do
-        is_expected.to have_content 'Bookers'
+    context 'ヘッダーの表示を確認' do                     # 動作条件の説明
+      subject { page }                                    # この後で行うit全てに使用するpageを、一括で定義している
+      it 'タイトルが表示される' do                        # 期待される結果の説明
+        is_expected.to have_content 'Bookers'             # ページ内に特定の文字列が表示されていることを検証する
+        # sublectを呼び出すために、is_expectedを使っている (参考：https://qiita.com/mm36/items/453d71d48dd8f462344c)
+        # ページ内にBookersという文字列が表示されていればtrueを返す
       end
       it 'Homeリンクが表示される' do
         home_link = find_all('a')[0].native.inner_text
